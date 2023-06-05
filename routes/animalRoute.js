@@ -6,6 +6,7 @@ const filesMiddleware = require('../middleware/filesMiddleware');
 
 router.get('/pending', animalController.getPendingAnimal);
 router.get('/adopted', animalController.getAdoptedAnimal);
+router.get('/:id', animalController.getAnimal);
 router.post('/:id', animalController.adoptAnimal);
 router.post(
     '/',

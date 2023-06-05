@@ -65,6 +65,17 @@ exports.getAdoptedAnimal = catchAsync(async (req, res, next) => {
     });
 });
 
+exports.getAnimal = catchAsync(async (req, res, next) => {
+    const animal = await Animal.findById(req.params.id);
+    if (!animal) {
+        return next(new AppError('This animal is nolonger exist', 400));
+    }
+    return res.status(200).json({
+        status: 'success',
+        data: animal,
+    });
+});
+
 exports.getAllAnimal = catchAsync(async (req, res, next) => {
     const animals = await Animal.find({});
     return res.status(200).json({

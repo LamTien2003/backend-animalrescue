@@ -36,7 +36,6 @@ blogSchema.pre(/^find/, function (next) {
         path: 'user',
         select: 'firstName lastName photo',
     });
-    this.select('-__v -createdAt -updatedAt');
     next();
 });
 

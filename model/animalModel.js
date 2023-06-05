@@ -79,6 +79,11 @@ const animalSchema = mongoose.Schema(
     },
 );
 
+animalSchema.pre(/^find/, function (next) {
+    this.select('-__v -createdAt -updatedAt');
+    next();
+});
+
 const Animal = mongoose.model('Animal', animalSchema);
 
 module.exports = Animal;
