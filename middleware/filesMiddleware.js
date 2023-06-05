@@ -26,13 +26,14 @@ exports.resizePhoto = (destination) => {
     return catchAsync(async (req, res, next) => {
         if (!req.file) return next();
         const random = Math.floor(Math.random() * 1000);
-        req.file.filename = `${destination}-${random}-${Date.now()}.jpeg`;
+        const fileNameCreate = `${destination}-${random}-${Date.now()}.jpeg`;
+        req.file.filename = `${process.env.DOMAIN}/img/${destination}/${fileNameCreate}`;
 
         await sharp(req.file.buffer)
             .resize(500, 500)
             .toFormat('jpeg')
             .jpeg({ quality: 90 })
-            .toFile(`public/img/${destination}/${req.file.filename}`);
+            .toFile(`public/img/${destination}/${fileNameCreate}`);
 
         next();
     });

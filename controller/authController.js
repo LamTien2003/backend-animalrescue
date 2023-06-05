@@ -12,26 +12,34 @@ const genarateToken = (data, sercetKey, expriredTime) => {
 };
 
 const createAndSendToken = (user, statusCode, res) => {
-    const accessToken = genarateToken(user, process.env.JWT_ACCESS_KEY, process.env.JWT_EXPIRES_IN_ACCESS);
-    const refreshToken = genarateToken(user, process.env.JWT_REFRESH_KEY, process.env.JWT_EXPIRES_IN_REFRESH);
+    const accessToken = genarateToken({ id: user._id }, process.env.JWT_ACCESS_KEY, process.env.JWT_EXPIRES_IN_ACCESS);
+    const refreshToken = genarateToken(
+        { id: user._id },
+        process.env.JWT_REFRESH_KEY,
+        process.env.JWT_EXPIRES_IN_REFRESH,
+    );
 
     const cookieOptions = {
         expires: new Date(Date.now() + process.env.COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
         httpOnly: true,
     };
+
+    const dataUser = { ...JSON.parse(JSON.stringify(user)) };
+    delete dataUser.password;
     //   if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
     res.cookie('jwt', refreshToken, cookieOptions);
 
     return res.status(statusCode).json({
         status: 'success',
         accessToken: accessToken,
+        data: dataUser,
     });
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
     console.log({ ...req.body, photo: req.file.filename });
     const newUser = await User.create({ ...req.body, photo: req.file.filename });
-    createAndSendToken({ id: newUser._id }, 201, res);
+    createAndSendToken(newUser, 201, res);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -45,7 +53,7 @@ exports.login = catchAsync(async (req, res, next) => {
         return next(new AppError('Incorrect email or password', 401));
     }
 
-    createAndSendToken({ id: user._id }, 200, res);
+    createAndSendToken(user, 200, res);
 });
 
 exports.refreshToken = catchAsync(async (req, res, next) => {
