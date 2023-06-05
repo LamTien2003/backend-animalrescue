@@ -27,7 +27,7 @@ exports.resizePhoto = (destination) => {
         if (!req.file) return next();
         const random = Math.floor(Math.random() * 1000);
         const fileNameCreate = `${destination}-${random}-${Date.now()}.jpeg`;
-        req.file.filename = `${process.env.DOMAIN}/img/${destination}/${fileNameCreate}`;
+        req.file.filename = `${process.env.DOMAIN_PRODUCTION}/img/${destination}/${fileNameCreate}`;
 
         await sharp(req.file.buffer)
             .resize(500, 500)
