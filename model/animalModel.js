@@ -5,7 +5,7 @@ const animalSchema = mongoose.Schema(
     {
         name: {
             type: String,
-            minlength: [10, 'Name of animal must more than 10 character'],
+            minlength: [1, 'Name of animal must more than 1 character'],
             maxlength: [50, 'Name of animal must less than 50 character'],
         },
         species: {
@@ -21,6 +21,8 @@ const animalSchema = mongoose.Schema(
             type: {
                 name: {
                     type: String,
+                    minlength: [1, 'Name of owner must more than 1 character'],
+                    maxlength: [50, 'Name of the owner must less than 50 character'],
                     required: [true, 'Must have name of person who looking for an owner for this animal '],
                 },
                 phone: {
@@ -44,6 +46,8 @@ const animalSchema = mongoose.Schema(
         newOwner: {
             type: {
                 name: {
+                    minlength: [1, 'Name of the person who looking for an new owner must more than 1 character'],
+                    maxlength: [50, 'Name of the person who looking for an new owner must less than 50 character'],
                     type: String,
                     required: [true, 'Must have name of person who looking for an new owner for this animal '],
                 },
