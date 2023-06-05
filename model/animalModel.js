@@ -13,6 +13,10 @@ const animalSchema = mongoose.Schema(
             required: [true, 'Animal must belong to some species'],
             enum: ['dog', 'cat'],
         },
+        description: {
+            type: String,
+            maxlength: [250, 'Name of animal must less than 250 character'],
+        },
         image: {
             type: String,
             required: [true, 'Must have image for animal'],
