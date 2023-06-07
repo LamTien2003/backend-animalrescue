@@ -51,13 +51,20 @@ exports.changeBlog = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllBlog = catchAsync(async (req, res, next) => {
-    const blogs = await Blog.find({});
+    const { page = 1, limit = 4 } = req.query;
+    const skip = (page - 1) * limit;
+
+    const countBlogs = await Blog.find({}).estimatedDocumentCount();
+
+    const blogs = await Blog.find({}).skip(skip).limit(limit);
+
     if (!blogs) {
         return next(new AppError('Have some error when try to get all Blog', 400));
     }
     return res.status(200).json({
         status: 'success',
         data: blogs,
+        countBlogs: countBlogs,
     });
 });
 
