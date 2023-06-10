@@ -8,7 +8,7 @@
     },
     "scripts": {
         "start-dev": "nodemon --inspect ./app.js",
-        "start": "nodemon --inspect ./app.js",
+        "start": "node ./app.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "",
