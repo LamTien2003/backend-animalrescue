@@ -71,6 +71,7 @@ app.use(
 
 // Routes
 route(app);
+app.get('/', (req, res) => res.send('hello'));
 // Handle unfound Route
 app.all('*', (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
