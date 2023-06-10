@@ -10,7 +10,6 @@ exports.createAnimal = catchAsync(async (req, res, next) => {
     if (req?.file?.filename) {
         payload.image = req.file.filename;
     }
-
     const animal = await Animal.create(payload);
     return res.status(200).json({
         status: 'success',

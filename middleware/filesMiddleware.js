@@ -3,6 +3,7 @@ const sharp = require('sharp');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
+const cloudinary = require('../utils/cloudinary');
 const multerStorage = multer.memoryStorage();
 
 const multerFilter = (req, file, cb) => {
@@ -27,7 +28,6 @@ exports.resizePhoto = (destination) => {
         if (!req.file) return next();
         const random = Math.floor(Math.random() * 1000);
         const fileNameCreate = `${destination}-${random}-${Date.now()}.jpeg`;
-        req.file.filename = `${process.env.DOMAIN_PRODUCTION}/img/${destination}/${fileNameCreate}`;
 
         await sharp(req.file.buffer)
             .resize(500, 500)
@@ -35,6 +35,8 @@ exports.resizePhoto = (destination) => {
             .jpeg({ quality: 90 })
             .toFile(`public/img/${destination}/${fileNameCreate}`);
 
+        const result = await cloudinary.v2.uploader.upload(`public/img/${destination}/${fileNameCreate}`);
+        req.file.filename = result.url;
         next();
     });
 };
