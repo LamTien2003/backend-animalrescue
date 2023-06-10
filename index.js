@@ -17,10 +17,10 @@ const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
 
 const route = require('./routes/index');
-const userRoute = require('./userRoute');
-const authRoute = require('./authRoute');
-const blogRoute = require('./blogRoute');
-const animalRoute = require('./animalRoute');
+const userRoute = require('./routes/userRoute');
+const authRoute = require('./routes/authRoute');
+const blogRoute = require('./routes/blogRoute');
+const animalRoute = require('./routes/animalRoute');
 // Environment Variable Config
 dotenv.config({ path: './config.env' });
 
