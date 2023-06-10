@@ -15,8 +15,12 @@ const hpp = require('hpp');
 const xss = require('xss-clean');
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
-const route = require('./routes/index');
 
+const route = require('./routes/index');
+const userRoute = require('./userRoute');
+const authRoute = require('./authRoute');
+const blogRoute = require('./blogRoute');
+const animalRoute = require('./animalRoute');
 // Environment Variable Config
 dotenv.config({ path: './config.env' });
 
@@ -70,8 +74,11 @@ app.use(
 );
 
 // Routes
-route(app);
-app.get('/', (req, res) => res.send('hello'));
+app.use('/user', userRoute);
+app.use('/auth', authRoute);
+app.use('/blog', blogRoute);
+app.use('/animal', animalRoute);
+
 // Handle unfound Route
 app.all('*', (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
