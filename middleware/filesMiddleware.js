@@ -23,7 +23,7 @@ exports.uploadSinglePhoto = (nameInput) => {
     return upload.single(nameInput);
 };
 
-exports.resizePhoto = (destination) => {
+exports.resizeUserPhoto = (destination) => {
     return catchAsync(async (req, res, next) => {
         if (!req.file) return next();
         const random = Math.floor(Math.random() * 1000);
@@ -31,6 +31,22 @@ exports.resizePhoto = (destination) => {
 
         await sharp(req.file.buffer)
             .resize(500, 500)
+            .toFormat('jpeg')
+            .jpeg({ quality: 90 })
+            .toFile(`public/img/${destination}/${fileNameCreate}`);
+
+        const result = await cloudinary.v2.uploader.upload(`public/img/${destination}/${fileNameCreate}`);
+        req.file.filename = result.url;
+        next();
+    });
+};
+exports.resizePhoto = (destination) => {
+    return catchAsync(async (req, res, next) => {
+        if (!req.file) return next();
+        const random = Math.floor(Math.random() * 1000);
+        const fileNameCreate = `${destination}-${random}-${Date.now()}.jpeg`;
+
+        await sharp(req.file.buffer)
             .toFormat('jpeg')
             .jpeg({ quality: 90 })
             .toFile(`public/img/${destination}/${fileNameCreate}`);
