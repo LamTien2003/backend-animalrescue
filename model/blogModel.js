@@ -12,7 +12,7 @@ const blogSchema = mongoose.Schema(
             type: String,
             required: [true, 'Blog must have a content'],
             minlength: [10, 'Title must have more than 10 character'],
-            maxlength: [3000, 'Title must have less than 3000 character'],
+            maxlength: [15000, 'Title must have less than 3000 character'],
         },
         coverImage: {
             type: String,
