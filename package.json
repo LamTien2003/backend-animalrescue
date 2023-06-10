@@ -4,11 +4,11 @@
     "description": "",
     "main": "index.js",
     "engines": {
-        "node": "14.x"
+        "node": "14.20.0"
     },
     "scripts": {
         "start-dev": "nodemon --inspect ./app.js",
-        "start": "node ./app.js",
+        "start": "nodemon --inspect ./app.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "",
