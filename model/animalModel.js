@@ -11,7 +11,6 @@ const animalSchema = mongoose.Schema(
         species: {
             type: String,
             required: [true, 'Animal must belong to some species'],
-            enum: ['dog', 'cat'],
         },
         gender: {
             type: String,
