@@ -11,7 +11,7 @@ router.post('/:id', animalController.adoptAnimal);
 router.post(
     '/',
     filesMiddleware.uploadSinglePhoto('image'),
-    filesMiddleware.resizePhoto('animal'),
+    filesMiddleware.resizeSmallPhoto('animal'),
     animalController.createAnimal,
 );
 router.get('/', animalController.getAllAnimal);

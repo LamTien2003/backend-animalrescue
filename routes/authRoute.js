@@ -8,7 +8,7 @@ const filesMiddleware = require('../middleware/filesMiddleware');
 router.post(
     '/signup',
     filesMiddleware.uploadSinglePhoto('photo'),
-    filesMiddleware.resizeUserPhoto('users'),
+    filesMiddleware.resizeSmallPhoto('users'),
     authController.signup,
 );
 router.post('/login', authController.login);

@@ -23,7 +23,7 @@ exports.uploadSinglePhoto = (nameInput) => {
     return upload.single(nameInput);
 };
 
-exports.resizeUserPhoto = (destination) => {
+exports.resizeSmallPhoto = (destination) => {
     return catchAsync(async (req, res, next) => {
         if (!req.file) return next();
         const random = Math.floor(Math.random() * 1000);
