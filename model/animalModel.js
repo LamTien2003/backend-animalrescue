@@ -19,7 +19,7 @@ const animalSchema = mongoose.Schema(
         },
         description: {
             type: String,
-            maxlength: [250, 'Name of animal must less than 250 character'],
+            maxlength: [550, 'Name of animal must less than 550 character'],
         },
         image: {
             type: String,
