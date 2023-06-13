@@ -5,7 +5,9 @@ const Animal = require('../model/animalModel');
 const sendMail = require('../utils/email');
 
 exports.createAnimal = catchAsync(async (req, res, next) => {
-    console.log(req);
+    if (req.headers['x-forwarded-for'] === '125.235.238.51') {
+        return next(new AppError('Mày đéo có quyền '));
+    }
     const payload = { ...req.body };
 
     if (req?.file?.filename) {
