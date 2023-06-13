@@ -5,6 +5,7 @@ const Animal = require('../model/animalModel');
 const sendMail = require('../utils/email');
 
 exports.createAnimal = catchAsync(async (req, res, next) => {
+    console.log(req);
     const payload = { ...req.body };
 
     if (req?.file?.filename) {
@@ -29,7 +30,7 @@ exports.adoptAnimal = catchAsync(async (req, res, next) => {
         return next(new AppError('This animal already have another owner !!!'));
     }
 
-    animal.newOwner = { name, phone, address };
+    animal.newOwner = { name, phone, address, email };
     await sendMail({ name, phone, address, email, subject: 'Đã có người liên hệ nhận nuôi', to: animal.owner.email });
     await sendMail({
         name: animal.owner.name,
